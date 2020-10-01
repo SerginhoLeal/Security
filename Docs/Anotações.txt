@@ -1,0 +1,66 @@
+## Ativando as configurações do GoogleMapsApi{
+  Painel -> Ir para a visão geral de APIs -> Bibliotecas --> "escolha o que quer ativar" --> Credencias --> Criar Credencias --> Chave de api
+}
+
+## Impressão digital do certificado de depuração{
+  Para Windows:{
+    keytool -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+  }
+}
+
+## Usando a GoogleMapsAPIs no aplicativo para android{
+
+  https://github.com/react-native-community/react-native-maps/blob/master/docs/installation.md
+
+  ## instalação{
+    npm install react-native-maps --save-exact
+  }
+
+  ## android/settings.gradle{
+    include ':react-native-maps'
+    project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/lib/android')
+  }
+
+  ## android/app/build.gradle{
+    dependencies {
+      implementation project(':react-native-maps')
+    }
+  }
+
+  ## android/build.gradle{
+    ext {
+      buildToolsVersion = "28.0.3"
+      minSdkVersion = 16
+      compileSdkVersion = 28
+      targetSdkVersion = 28
+      supportLibVersion = "28.0.0"
+      playServicesVersion = "17.0.0"
+      androidMapsUtilsVersion = "+0.5"
+    }
+  }
+
+  ## android/app/src/main/AndroidManifest.xml{
+    <application>
+      ...
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="your GoogleMapsApi"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+      ...
+    </application>
+
+    Caso esse erro apareça{
+      error Android project not found. Are you sure this is a React Native project? If your Android files are located in a non-standard location (e.g. 
+      not inside 'android' folder), consider setting `project.android.sourceDir` option to point to a new location. Run CLI with --verbose flag for more details.
+    }
+    poder ser esse <meta-data>, melhor digitar na mão
+  }
+
+  ## android/app/src/main/Java/com/'nome do seu projeto'/MainApplication.java{
+    import com.airbnb.android.react.maps.MapsPackage;
+  }
+  
+}
+
+
+## upload de imagens{
+  Lá no MainApplication.java é necessario desabilitar isso --> initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+}
